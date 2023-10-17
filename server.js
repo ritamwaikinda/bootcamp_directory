@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 // const logger = require("./middleware/logger");
 const morgan = require("morgan");
 const colors = require("colors");
+//middleware has to be called into server//app.use()
+const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 
 // Load env vars
@@ -28,6 +30,8 @@ if (process.env.NODE_ENV === "development") {
 }
 //Mount routers
 app.use("/api/v1/bootcamps", bootcamps);
+//if you want to use this in the bootcamps controller, you have to call it after above-sentence because middleware is executed in a linear order
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
