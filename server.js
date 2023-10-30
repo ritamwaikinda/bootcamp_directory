@@ -15,6 +15,7 @@ connectDB();
 
 //Route files
 const bootcamps = require("./routes/bootcamps");
+const courses = require("./routes/courses");
 
 const app = express();
 
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === "development") {
 }
 //Mount routers
 app.use("/api/v1/bootcamps", bootcamps);
+app.use("/api/v1/courses", courses);
 //if you want to use this in the bootcamps controller, you have to call it after above-sentence because middleware is executed in a linear order
 app.use(errorHandler);
 
