@@ -10,6 +10,9 @@ const {
 	testDummy,
 } = require("../controllers/bootcamps");
 
+const Bootcamp = require("../models/Bootcamp.js");
+const advancedResults = require("../middleware/advancedResults");
+
 // Include other resource routers
 const courseRouter = require("./courses");
 
@@ -18,7 +21,10 @@ const router = express.Router();
 // Re-route into other resource routers. It will "mount it forward/into" the courseRouter instead of dealing with it here
 router.use("/:bootcampId/courses", courseRouter);
 
-router.route("/").get(getBootcamps).post(createBootcamp);
+router
+	.route("/")
+	.get(advancedResults(Bootcamp, "courses"), getBootcamps)
+	.post(createBootcamp);
 
 router
 	.route("/:id")
