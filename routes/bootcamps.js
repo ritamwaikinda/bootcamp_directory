@@ -1,4 +1,5 @@
 const express = require("express");
+
 const {
 	getBootcamps,
 	getBootcamp,
@@ -7,7 +8,6 @@ const {
 	deleteBootcamp,
 	getBootcampsInRadius,
 	bootcampPhotoUpload,
-	testDummy,
 } = require("../controllers/bootcamps");
 
 const Bootcamp = require("../models/Bootcamp.js");
@@ -18,23 +18,23 @@ const courseRouter = require("./courses");
 
 const router = express.Router();
 
+const { protect } = require("../middleware/auth");
+
 // Re-route into other resource routers. It will "mount it forward/into" the courseRouter instead of dealing with it here
 router.use("/:bootcampId/courses", courseRouter);
+router.route("/radius/:zipcode/:distance").get(getBootcampsInRadius);
+router.route("/:id/photo").put(protect, bootcampPhotoUpload);
 
 router
 	.route("/")
 	.get(advancedResults(Bootcamp, "courses"), getBootcamps)
-	.post(createBootcamp);
+	.post(protect, createBootcamp);
 
 router
 	.route("/:id")
 	.get(getBootcamp)
-	.put(updateBootcamp)
-	.delete(deleteBootcamp);
-
-router.route("/radius/:zipcode/:distance").get(getBootcampsInRadius);
-
-router.route("/:id/photo").put(bootcampPhotoUpload);
+	.put(protect, updateBootcamp)
+	.delete(protect, deleteBootcamp);
 
 module.exports = router;
 

@@ -64,7 +64,19 @@ exports.login = asyncHandler(async (req, res, next) => {
 	sendTokenResponse(user, 200, res);
 });
 
-// Get toket from model, create cookie, send response
+// @desc    GEt current logged in user
+// @route   POST /api/v1/auth/me
+// @access  Private
+exports.getMe = asyncHandler(async (req, res, next) => {
+	const user = await User.findById(req.user.id);
+
+	res.status(200).json({
+		success: true,
+		data: user,
+	});
+});
+
+// Get token from model, create cookie, send response
 const sendTokenResponse = (user, statusCode, res) => {
 	// Create token
 	const token = user.getSignedJwtToken();
@@ -77,6 +89,11 @@ const sendTokenResponse = (user, statusCode, res) => {
 		//only accessible from client-side script
 		httpOnly: true,
 	};
+
+	// puts a flag to make the cookie secure when in production
+	if (process.env.NODE_ENV === "production") {
+		options.secure = true;
+	}
 
 	// cookie taken in 3 things - key, value, and options
 	res.status(statusCode).cookie("token", token, options).json({
