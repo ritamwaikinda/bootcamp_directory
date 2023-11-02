@@ -17,12 +17,13 @@ exports.register = asyncHandler(async (req, res, next) => {
 	});
 
 	// Create token
-	const token = user.getSignedJwtToken();
+	// const token = user.getSignedJwtToken();
 
-	res.status(200).json({
-		success: true,
-		token,
-	});
+	// res.status(200).json({
+	// 	success: true,
+	// 	token,
+	// });
+	sendTokenResponse(user, 200, res);
 });
 
 // @desc    Login user
@@ -54,10 +55,32 @@ exports.login = asyncHandler(async (req, res, next) => {
 	}
 
 	// Create token
+	// const token = user.getSignedJwtToken();
+
+	// res.status(200).json({
+	// 	success: true,
+	// 	token,
+	// });
+	sendTokenResponse(user, 200, res);
+});
+
+// Get toket from model, create cookie, send response
+const sendTokenResponse = (user, statusCode, res) => {
+	// Create token
 	const token = user.getSignedJwtToken();
 
-	res.status(200).json({
+	//Create cookie
+	const options = {
+		expires: new Date(
+			Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+		),
+		//only accessible from client-side script
+		httpOnly: true,
+	};
+
+	// cookie taken in 3 things - key, value, and options
+	res.status(statusCode).cookie("token", token, options).json({
 		success: true,
 		token,
 	});
-});
+};

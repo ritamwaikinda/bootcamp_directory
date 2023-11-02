@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
 const fileupload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 //middleware has to be called into server//app.use()
 const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
@@ -24,6 +25,9 @@ const app = express();
 
 // Body parser
 app.use(express.json());
+
+// Cookie parser
+app.use(cookieParser());
 
 //won't just be ran by itself, must be used by app :)
 // app.use(logger);
