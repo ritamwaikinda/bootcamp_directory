@@ -18,6 +18,7 @@ connectDB();
 //Route files
 const bootcamps = require("./routes/bootcamps");
 const courses = require("./routes/courses");
+const auth = require("./routes/auth");
 
 const app = express();
 
@@ -39,6 +40,8 @@ app.use(express.static(path.join(__dirname, "public")));
 //Mount routers
 app.use("/api/v1/bootcamps", bootcamps);
 app.use("/api/v1/courses", courses);
+app.use("/api/v1/auth", auth);
+
 //if you want to use this in the bootcamps controller, you have to call it after above-sentence because middleware is executed in a linear order
 app.use(errorHandler);
 
@@ -58,12 +61,3 @@ process.on("unhandledRejection", (err, promise) => {
 	// close server and exit process
 	server.close(() => process.exit(1));
 });
-
-/*
-GET/POST/PUT/DELETE
-api/v1/bootcamps
-api/v1/courses
-api/v1/reviews
-api/v1/auth
-api/v1/users
-*/
