@@ -36,6 +36,11 @@ const CourseSchema = new mongoose.Schema({
 		ref: "Bootcamp",
 		required: true,
 	},
+	user: {
+		type: mongoose.Schema.ObjectId,
+		ref: "User",
+		required: true,
+	},
 });
 
 // statics are static methods called on the models. Can be called in the controller right on the model eg Course.static()
