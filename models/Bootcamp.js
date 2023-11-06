@@ -103,6 +103,11 @@ const BootcampSchema = new mongoose.Schema(
 			type: Date,
 			default: Date.now,
 		},
+		user: {
+			type: mongoose.Schema.ObjectId,
+			ref: "User",
+			required: true,
+		},
 	},
 	// This is so you can create virtual documents, documents that are created but not persisted to the database
 	{
