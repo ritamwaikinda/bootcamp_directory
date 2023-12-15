@@ -3,6 +3,8 @@ const ErrorResponse = require("../utils/errorResponse");
 const errorHandler = (err, req, res, next) => {
 	let error = { ...err };
 
+	error.message = err.message;
+
 	console.log(err.stack.red);
 	// console.log(err.name);
 
@@ -26,7 +28,7 @@ const errorHandler = (err, req, res, next) => {
 
 	res
 		.status(error.statusCode || 500)
-		.json({ success: false, error: error.message || "Server Error" });
+		.json({ success: false, error: error.message || "Server Errorz" });
 };
 
 module.exports = errorHandler;
