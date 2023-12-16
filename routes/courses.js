@@ -8,10 +8,10 @@ const {
 } = require("../controllers/courses");
 
 const Course = require("../models/Course.js");
-const advancedResults = require("../middleware/advancedResults.js");
 
 const router = express.Router({ mergeParams: true }); //mergeParams allows the rerouting from bootcamps to come "into" courses
 
+const advancedResults = require("../middleware/advancedResults.js");
 const { protect, authorize } = require("../middleware/auth");
 
 router
