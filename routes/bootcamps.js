@@ -14,6 +14,7 @@ const Bootcamp = require("../models/Bootcamp.js");
 
 // Include other resource routers
 const courseRouter = require("./courses");
+const reviewRouter = require("./reviews");
 
 const router = express.Router();
 
@@ -22,6 +23,8 @@ const { protect, authorize } = require("../middleware/auth");
 
 // Re-route into other resource routers. It will "mount it forward/into" the courseRouter instead of dealing with it here
 router.use("/:bootcampId/courses", courseRouter);
+router.use("/:bootcampId/reviews", reviewRouter);
+
 router.route("/radius/:zipcode/:distance").get(getBootcampsInRadius);
 //put authorize after protect, because "req.user" gets set in "protect" and we want to be able to use that
 router
