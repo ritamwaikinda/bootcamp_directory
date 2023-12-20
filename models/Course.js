@@ -78,7 +78,7 @@ CourseSchema.post("save", function () {
 });
 
 // Call getAverageCost before remove
-CourseSchema.pre("deleteOne", function () {
+CourseSchema.pre("deleteOne", { document: true, query: false }, function () {
 	this.constructor.getAverageCost(this.bootcamp);
 });
 

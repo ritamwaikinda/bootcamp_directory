@@ -68,7 +68,7 @@ ReviewSchema.post("save", function () {
 });
 
 // Call getAverageRating before remove
-ReviewSchema.pre("deleteOne", function () {
+ReviewSchema.pre("deleteOne", { document: true, query: false }, function () {
 	this.constructor.getAverageRating(this.bootcamp);
 });
 
