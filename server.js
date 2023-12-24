@@ -12,6 +12,7 @@ const helmet = require("helmet");
 const xss = require("xss-clean");
 const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
+const cors = require("cors");
 const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 
@@ -64,6 +65,9 @@ app.use(limiter);
 
 // Prevent HTTP param pollution
 app.use(hpp());
+
+// Enable CORS (once we upload to a domain - if we create a frontend on a different domain, we'll be able to communicate with our API)
+app.use(cors());
 
 // Set static folder
 app.use(express.static(path.join(__dirname, "public")));
